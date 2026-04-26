@@ -1,0 +1,46 @@
+<aside class="sidebar" [class.collapsed]="collapsed">
+    <div class="logo-header">
+        <button class="collapse-btn" (click)="toggle()">
+            ☰
+        </button>
+    </div>
+    <div class="sidebar-logo">
+        <a class="logo-mark" routerLink="/home">
+            <div class="logo-icon">⚽</div>
+            <div *ngIf="!collapsed">
+                <div class="logo-text">AllSports</div>
+                <div class="logo-sub">Painel do TODO</div>
+            </div>
+        </a>
+    </div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-label" *ngIf="!collapsed">Administração</div>
+
+        <a class="nav-item" routerLink="/estabelecimentos">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 21V3h12v18" />
+                <path d="M9 21V9h12v12" />
+                <path d="M6 6h.01M6 9h.01M6 12h.01M6 15h.01" />
+                <path d="M12 12h.01M12 15h.01M12 18h.01" />
+            </svg>
+            <span *ngIf="!collapsed">Estabelecimentos</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="venue-card">
+            <div class="venue-avatar">🏟️</div>
+            <div class="venue-info" *ngIf="!collapsed">
+                <div class="venue-name">TODO</div>
+                <div class="venue-type">TODO</div>
+            </div>
+            <div class="venue-chevron" *ngIf="!collapsed">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                    <path d="M5 8l5 5 5-5" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+</aside>

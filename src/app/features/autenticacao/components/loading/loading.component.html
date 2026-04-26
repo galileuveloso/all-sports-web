@@ -1,0 +1,29 @@
+<div class="loading-screen">
+    <div class="loading-content">
+
+        <div class="login-brand">
+            <a class="logo-mark">
+                <div class="logo-icon">⚽</div>
+                <div>
+                    <div class="logo-text">AllSports</div>
+                    <div class="logo-sub">Plataforma Esportiva</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="progress-wrapper">
+            <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="progress"></div>
+            </div>
+
+            <div class="progress-percent">
+                {{ progress | number:'1.0-0' }}%
+            </div>
+        </div>
+
+        <div class="loading-text">
+            {{ message }}
+        </div>
+
+    </div>
+</div>

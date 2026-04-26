@@ -1,0 +1,111 @@
+<div class="login-wrapper">
+
+  <div class="login-brand">
+    <a class="logo-mark">
+      <div class="logo-icon">⚽</div>
+      <div>
+        <div class="logo-text">AllSports</div>
+        <div class="logo-sub">Plataforma Esportiva</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="login-card panel">
+    <div class="login-card__header">
+      <h1 class="login-card__title">Bem-vindo de volta</h1>
+      <p class="login-card__subtitle">Entre com suas credenciais para continuar</p>
+    </div>
+
+    <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+      <div class="form-group">
+        <label class="form-label" for="login">Login</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="10" cy="6" r="3"/>
+            <path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+          </svg>
+          <input
+            id="login"
+            class="form-input form-input--icon"
+            formControlName="login"
+            type="text"
+            placeholder="Seu login de acesso"
+            autocomplete="username"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-label-row">
+          <label class="form-label" for="senha">Senha</label>
+          <a class="form-link" href="#">Esqueceu a senha?</a>
+        </div>
+        <div class="input-wrapper">
+          <svg class="input-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="4" y="9" width="12" height="8" rx="2"/>
+            <path d="M7 9V6a3 3 0 0 1 6 0v3"/>
+          </svg>
+          <input
+            id="senha"
+            class="form-input form-input--icon form-input--icon-right"
+            formControlName="senha"
+            [type]="mostrarSenha ? 'text' : 'password'"
+            placeholder="Sua senha"
+            autocomplete="current-password"
+          />
+          <button type="button" class="input-toggle-btn" (click)="toggleSenha()" aria-label="Mostrar senha">
+            @if (mostrarSenha) {
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 3l14 14M12.45 12.45A3 3 0 0 1 7.55 7.55M6.3 4.3C4.2 5.6 2.5 7.6 2 10c.9 3.8 4.5 6.5 8 6.5a9.6 9.6 0 0 0 3.7-.74M10 4c3.5 0 7.1 2.7 8 6.5-.4 1.6-1.3 3-2.5 4.1"/>
+              </svg>
+            } @else {
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 10s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z"/>
+                <circle cx="10" cy="10" r="2.5"/>
+              </svg>
+            }
+          </button>
+        </div>
+      </div>
+
+      @if (mensagemErro) {
+        <div class="form-error visible" role="alert">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="10" cy="10" r="8"/>
+            <path d="M10 6v5M10 14h.01"/>
+          </svg>
+          {{ mensagemErro }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-submit"
+        [disabled]="autenticacaoStore.isLoading()"
+      >
+        @if (autenticacaoStore.isLoading()) {
+          <span>Entrando...</span>
+        } @else {
+          <span>Entrar</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 10h12M10 4l6 6-6 6"/>
+          </svg>
+        }
+      </button>
+
+    </form>
+
+    <div class="login-footer">
+      <span>Não tem uma conta?</span>
+      <a class="form-link" href="#">Cadastre-se</a>
+    </div>
+  </div>
+
+  <div class="login-bg-decoration">
+    <div class="deco-circle deco-circle--1"></div>
+    <div class="deco-circle deco-circle--2"></div>
+    <div class="deco-circle deco-circle--3"></div>
+  </div>
+
+</div>

@@ -1,0 +1,73 @@
+<app-modal-ui [isOpen]="isOpen" title="Novo estabelecimento" subtitle="Preencha os dados para cadastrar o estabelecimento."
+    size="xl" (closed)="fecharModal()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Nome -->
+        <div class="form-group">
+            <label class="form-label">
+                Nome do estabelecimento <span class="form-required">*</span>
+            </label>
+            <input class="form-input" [class.form-input--error]="hasError('nome')" formControlName="nome" type="text"
+                placeholder="Ex: Arena Central" autocomplete="off" />
+            <span class="form-error" *ngIf="hasError('nome')">Campo obrigatório</span>
+            <span class="form-error" *ngIf="hasError('nome', 'minlength')">Mínimo 3 caracteres</span>
+        </div>
+
+        <!-- Telefone + Endereço -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">
+                    Telefone / WhatsApp <span class="form-required">*</span>
+                </label>
+                <input class="form-input" [class.form-input--error]="hasError('telefone')" formControlName="telefone"
+                    type="tel" placeholder="(99) 99999-0000" appTelefoneMask/>
+                <span class="form-error" *ngIf="hasError('telefone')">Campo obrigatório</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    Endereço <span class="form-required">*</span>
+                </label>
+                <input class="form-input" [class.form-input--error]="hasError('endereco')" formControlName="endereco"
+                    type="text" placeholder="Rua XV de Novembro, 1234 — Curitiba, PR" />
+                <span class="form-error" *ngIf="hasError('endereco')">Campo obrigatório</span>
+            </div>
+        </div>
+
+        <!-- Modalidades -->
+        <div class="form-group">
+            <label class="form-label">
+                Modalidades disponíveis <span class="form-required">*</span>
+            </label>
+            <input class="form-input" [class.form-input--error]="hasError('modalidades')" formControlName="modalidades"
+                type="text" placeholder="Ex: Futsal, Society, Padel, Beach Tennis" />
+            <span class="form-hint">Separe por vírgula</span>
+            <span class="form-error" *ngIf="hasError('modalidades')">Campo obrigatório</span>
+        </div>
+
+        <!-- Ativo -->
+        <div class="form-toggle-row">
+            <div class="form-toggle-info">
+                <span class="form-toggle-label">Estabelecimento ativo</span>
+                <span class="form-toggle-sub">Visível para jogadores na plataforma</span>
+            </div>
+            <label class="toggle-switch">
+                <input type="checkbox" formControlName="ativo" />
+                <span class="toggle-track">
+                    <span class="toggle-thumb"></span>
+                </span>
+            </label>
+        </div>
+
+        <!-- Footer -->
+        <div modal-footer class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="fecharModal()">
+                Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary">
+                Criar estabelecimento
+            </button>
+        </div>
+
+    </form>
+</app-modal-ui>

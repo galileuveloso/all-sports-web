@@ -1,0 +1,28 @@
+<div class="modal-backdrop" [class.modal-backdrop--visible]="animating" (click)="onBackdropClick()" *ngIf="visible"
+    role="dialog" aria-modal="true" [attr.aria-label]="title">
+    <div class="modal-panel" [class.modal-panel--visible]="animating"
+        [class]="'modal-panel modal-panel--' + size + (animating ? ' modal-panel--visible' : '')"
+        (click)="onPanelClick($event)">
+        <!-- Header -->
+        <div class="modal-header" *ngIf="title || closable">
+            <div class="modal-header__titles">
+                <h2 class="modal-title" *ngIf="title">{{ title }}</h2>
+                <p class="modal-subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+            </div>
+
+            <button *ngIf="closable" class="modal-close" (click)="closed.emit()" aria-label="Fechar" type="button">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Content (ng-content) -->
+        <div class="modal-body">
+            <ng-content />
+        </div>
+
+        <!-- Footer (slot opcional) -->
+        <ng-content select="[modal-footer]" />
+    </div>
+</div>

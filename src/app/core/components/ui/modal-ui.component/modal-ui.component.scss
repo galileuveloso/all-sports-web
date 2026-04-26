@@ -1,0 +1,180 @@
+// ─── Design tokens (espelham o protótipo AllSports) ───────────────────────────
+:root {
+    --bg: #0d0f0e;
+    --surface: #141714;
+    --surface-2: #1c1f1c;
+    --surface-3: #232723;
+    --border: rgba(255, 255, 255, 0.07);
+    --border-strong: rgba(255, 255, 255, 0.12);
+    --text: #e8ede8;
+    --text-2: #8a948a;
+    --text-3: #5a615a;
+    --accent: #9dff57;
+    --accent-dim: rgba(157, 255, 87, 0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+}
+
+// ─── Backdrop ─────────────────────────────────────────────────────────────────
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    transition:
+        background 0.2s ease,
+        backdrop-filter 0.2s ease;
+
+    &--visible {
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+    }
+}
+
+// ─── Panel ────────────────────────────────────────────────────────────────────
+.modal-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: calc(100vh - 48px);
+    overflow: hidden;
+
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    box-shadow:
+        0 24px 48px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(157, 255, 87, 0.04);
+
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+
+    &--visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    // Tamanhos
+    &--sm {
+        max-width: 400px;
+    }
+
+    &--md {
+        max-width: 560px;
+    }
+
+    &--lg {
+        max-width: 720px;
+    }
+
+    &--xl {
+        max-width: 960px;
+    }
+}
+
+// ─── Header ───────────────────────────────────────────────────────────────────
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.modal-header__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.modal-title {
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    color: var(--text);
+    margin: 0;
+}
+
+.modal-subtitle {
+    font-family: var(--font);
+    font-size: 12.5px;
+    color: var(--text-3);
+    margin: 0;
+}
+
+// ─── Close button ─────────────────────────────────────────────────────────────
+.modal-close {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-3);
+    cursor: pointer;
+    transition:
+        background 0.15s,
+        color 0.15s,
+        border-color 0.15s;
+
+    &:hover {
+        background: var(--surface-3);
+        color: var(--text);
+        border-color: var(--border-strong);
+    }
+}
+
+// ─── Body ─────────────────────────────────────────────────────────────────────
+.modal-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1;
+
+    // scrollbar sutil
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-3) transparent;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--surface-3);
+        border-radius: 99px;
+    }
+}
+
+// ─── Footer (slot) ────────────────────────────────────────────────────────────
+// O consumer projeta com [modal-footer]; este bloco estiliza o wrapper externo
+// caso queira aplicar padding/border automaticamente via classe utilitária.
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+}

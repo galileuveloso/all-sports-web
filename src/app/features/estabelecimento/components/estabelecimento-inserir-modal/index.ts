@@ -1,0 +1,1 @@
+export * from './estabelecimento-inserir-modal.component';

@@ -1,0 +1,1 @@
+export * from './usuario-nao-autorizado-ui.component';

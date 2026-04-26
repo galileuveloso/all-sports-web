@@ -1,0 +1,215 @@
+/* login.component.scss — apenas estilos específicos da tela de login */
+
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Brand ──────────────────────────────────────────────────────────────────*/
+.login-brand {
+  margin-bottom: 32px;
+}
+
+.login-brand .logo-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+.login-brand .logo-text {
+  font-size: 18px;
+}
+
+/* ─── Card ───────────────────────────────────────────────────────────────────*/
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+.login-card__header {
+  margin-bottom: 28px;
+}
+
+.login-card__title {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+
+.login-card__subtitle {
+  font-size: 13px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+/* ─── Form overrides ─────────────────────────────────────────────────────────*/
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-form .form-group {
+  margin-bottom: 0;
+}
+
+.form-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-link {
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.form-link:hover {
+  opacity: 0.8;
+}
+
+/* ─── Input com ícone ────────────────────────────────────────────────────────*/
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  color: var(--text-3);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.form-input--icon {
+  padding-left: 38px;
+}
+
+.form-input--icon-right {
+  padding-right: 42px;
+}
+
+.input-toggle-btn {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  transition: color 0.15s;
+}
+
+.input-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.input-toggle-btn:hover {
+  color: var(--text-2);
+}
+
+/* ─── Submit ─────────────────────────────────────────────────────────────────*/
+.btn-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.btn-submit svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.15s;
+}
+
+.btn-submit:hover svg {
+  transform: translateX(3px);
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────────*/
+.login-footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* ─── Background decoration ──────────────────────────────────────────────────*/
+.login-bg-decoration {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.04;
+}
+
+.deco-circle--1 {
+  width: 500px;
+  height: 500px;
+  background: var(--accent);
+  top: -150px;
+  right: -150px;
+}
+
+.deco-circle--2 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent);
+  bottom: -120px;
+  left: -100px;
+}
+
+.deco-circle--3 {
+  width: 200px;
+  height: 200px;
+  background: var(--blue);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.03;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────*/
+@media (max-width: 480px) {
+  .login-card {
+    padding: 24px 20px;
+  }
+}
