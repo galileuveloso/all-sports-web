@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 
 import {
   FormBuilder,
@@ -15,7 +15,8 @@ import {
 } from 'app/core';
 
 import {
-  EstabelecimentoModel
+  EstabelecimentoModel,
+  UsuarioModel
 } from 'app/domain';
 
 import {
@@ -40,11 +41,12 @@ export class EstabelecimentoInserirModalComponent implements OnInit {
   estabelecimentoStore = inject(EstabelecimentoStore);
   usuarioStore = inject(UsuarioStore);
 
-  isOpen = false;
+  estabelecimento: EstabelecimentoModel | null = null;
   usuarioMany = this.usuarioStore.getUsuarioGestorQuadraMany;
-  gestoresSelecionados: any[] = [];
+  gestoresSelecionados: UsuarioModel[] = [];
   usuarioSelecionadoId: string | null = null;
 
+  isOpen = false;
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -62,12 +64,32 @@ export class EstabelecimentoInserirModalComponent implements OnInit {
 
   }
 
-  abrirModal() {
+  abrirModal(estabelecimento?: EstabelecimentoModel) {
     this.isOpen = true;
+
+    if (estabelecimento) {
+      this.estabelecimento = estabelecimento;
+
+      this.form.patchValue({
+        nome: estabelecimento.nome,
+        telefone: estabelecimento.telefone,
+        endereco: estabelecimento.endereco,
+        modalidades: estabelecimento.modalidades,
+        ativo: estabelecimento.ativo
+      });
+
+      this.gestoresSelecionados = this.usuarioMany()
+        .filter(u => estabelecimento.idUsuarioGestorMany?.includes(u.id));
+
+      this.atualizarFormGestores();
+    } else {
+      this.estabelecimento = null;
+    }
   }
 
   fecharModal(): void {
     this.isOpen = false;
+    this.estabelecimento = null;
     this.form.reset({ ativo: true });
     this.gestoresSelecionados = [];
     this.usuarioSelecionadoId = null;
@@ -80,15 +102,20 @@ export class EstabelecimentoInserirModalComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    
+
     const payload = this.form?.getRawValue();
 
     let estabelecimento = EstabelecimentoModel.create({
       ...payload,
+      id: this.estabelecimento?.id,
       idUsuarioGestorMany: payload.gestores
     });
 
-    this.estabelecimentoStore.inserirEstabelecimento({ estabelecimento: estabelecimento });
+    if (this.isEdicao) {
+      this.estabelecimentoStore.atualizarEstabelecimento({ estabelecimento });
+    } else {
+      this.estabelecimentoStore.inserirEstabelecimento({ estabelecimento });
+    }
 
     this.fecharModal();
   }
@@ -117,7 +144,7 @@ export class EstabelecimentoInserirModalComponent implements OnInit {
     this.atualizarFormGestores();
   }
 
-  removerGestor(id: number): void {
+  removerGestor(id: string): void {
     this.gestoresSelecionados = this.gestoresSelecionados.filter(g => g.id !== id);
     this.atualizarFormGestores();
   }
@@ -125,5 +152,13 @@ export class EstabelecimentoInserirModalComponent implements OnInit {
   atualizarFormGestores(): void {
     const ids = this.gestoresSelecionados.map(g => g.id);
     this.form.get('gestores')?.setValue(ids);
+  }
+
+  get isEdicao(): boolean {
+    return !!this.estabelecimento;
+  }
+
+  get title(): string {
+    return this.isEdicao ? 'Editar estabelecimento' : 'Criar estabelecimento'
   }
 }

@@ -11,7 +11,7 @@ export class EstabelecimentoModel {
     dataCadastro: Date | null = null;
     dataAtualizacao: Date | null = null;
     dataRemocao: Date | null = null;
-    idUsuarioGestorMany: number[] | null = null
+    idUsuarioGestorMany: string[] | null = null
 
     public static create(data: any) {
         let instance = FactoryHelper.create(EstabelecimentoModel, { ...data });

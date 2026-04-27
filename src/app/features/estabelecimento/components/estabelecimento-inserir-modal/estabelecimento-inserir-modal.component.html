@@ -1,5 +1,5 @@
-<app-modal-ui [isOpen]="isOpen" title="Novo estabelecimento"
-    subtitle="Preencha os dados para cadastrar o estabelecimento." size="xl" (closed)="fecharModal()">
+<app-modal-ui [isOpen]="isOpen" title="{{ title }}" subtitle="Preencha os dados para cadastrar o estabelecimento."
+    size="xl" (closed)="fecharModal()">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
 
         <!-- Nome -->
@@ -100,7 +100,7 @@
                 Cancelar
             </button>
             <button type="submit" class="btn btn-primary">
-                Criar estabelecimento
+                {{title}}
             </button>
         </div>
 

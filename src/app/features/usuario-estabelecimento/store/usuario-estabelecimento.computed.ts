@@ -19,6 +19,11 @@ export function withUsuarioEstabelecimentoComputed() {
     withComputed((state) => ({
       getItens: computed(() => {
         return state.itens();
+      }),
+      getItensByIdEstabelecimento: computed(() => {
+        return (idEstabelecimento: string) => {
+          return state.itens().filter(item => item.idEstabelecimento === idEstabelecimento);
+        }
       })
     }))
   );

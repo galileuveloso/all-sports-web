@@ -20,7 +20,8 @@ import {
 } from 'app/domain';
 
 import {
-    EstabelecimentoState
+    EstabelecimentoState,
+    UsuarioEstabelecimentoStore
 } from 'app/features';
 
 export function withEstabelecimentoMethods() {
@@ -28,6 +29,7 @@ export function withEstabelecimentoMethods() {
         { state: type<EstabelecimentoState>() },
         withMethods((state) => {
             const service = inject(AllSportsService);
+            const usuarioEstabelecimentoStore = inject(UsuarioEstabelecimentoStore);
 
             return {
                 selecionarEstabelecimentoByFilter: rxMethod<void>(
@@ -76,18 +78,64 @@ export function withEstabelecimentoMethods() {
                                 error: undefined
                             });
                         }),
-                        switchMap(({estabelecimento}) =>
+                        switchMap(({ estabelecimento }) =>
                             service.post<EstabelecimentoModel>('estabelecimento',
                                 estabelecimento,
                             ).pipe(
                                 tapResponse({
                                     next: (response: EstabelecimentoModel) => {
-                                        console.log(estabelecimento);
-                                        let itens = [...state.itens(), EstabelecimentoModel.create(response)]
-                                        
-                                        console.log(response);
-                                        console.log(EstabelecimentoModel.create(response));
-                                        console.log(itens);
+
+                                        let estabelecimento = EstabelecimentoModel.create(response);
+
+                                        usuarioEstabelecimentoStore.updateUsuarioEstabelecimentoByEstabelecimento(estabelecimento);
+
+                                        let itens = [...state.itens(), estabelecimento];
+
+                                        patchState(state, {
+                                            itens: itens,
+                                            isLoading: false,
+                                            isLoadingSuccess: true
+                                        });
+                                    },
+                                    error: (error: HttpResponseError) => {
+                                        patchState(state, {
+                                            isLoading: false,
+                                            isLoadingFailure: true,
+                                            error: error
+                                        });
+                                    },
+                                    finalize: () => {
+                                        patchState(state, { isLoading: false });
+                                    }
+                                })
+                            )
+                        )
+                    )
+                ),
+                atualizarEstabelecimento: rxMethod<{ estabelecimento: EstabelecimentoModel }>(
+                    pipe(
+                        tap(() => {
+                            patchState(state, {
+                                isLoading: true,
+                                isLoadingSuccess: false,
+                                isLoadingFailure: false,
+                                error: undefined
+                            });
+                        }),
+                        switchMap(({ estabelecimento }) =>
+                            service.put<EstabelecimentoModel>('estabelecimento',
+                                estabelecimento,
+                            ).pipe(
+                                tapResponse({
+                                    next: (response: EstabelecimentoModel) => {
+
+                                        const estabelecimento = EstabelecimentoModel.create(response);
+
+                                        usuarioEstabelecimentoStore.updateUsuarioEstabelecimentoByEstabelecimento(estabelecimento);
+
+                                        const itens = state.itens().map(item =>
+                                            item.id === estabelecimento.id ? estabelecimento : item
+                                        );
 
                                         patchState(state, {
                                             itens: itens,

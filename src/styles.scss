@@ -140,6 +140,12 @@ a:hover {
 .btn-primary {
   background: var(--accent);
   color: #0d0f0e;
+  height: 42px;
+  border: none;
+  padding: 0 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .btn-primary:hover {
@@ -147,14 +153,19 @@ a:hover {
 }
 
 .btn-secondary {
-  background: var(--surface-2);
-  color: var(--text-2);
-  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  height: 42px;
+  border: 1px solid var(--text);
+  padding: 0 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .btn-secondary:hover {
-  color: var(--text);
-  border-color: var(--border-strong);
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* ─── Form ───────────────────────────────────────────────────────────────────*/

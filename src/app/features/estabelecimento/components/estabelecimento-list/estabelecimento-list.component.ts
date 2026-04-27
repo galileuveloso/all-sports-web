@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, ViewChild } from '@angular/core';
 import { TelefonePipe } from 'app/core';
+import { EstabelecimentoModel } from 'app/domain';
 
 import {
   EstabelecimentoInserirModalComponent,
@@ -26,6 +27,10 @@ export class EstabelecimentoListComponent {
   estabelecimentoMany = this.estabelecimentoStore.getItens;
 
   novo() {
-    this.inserirModal?.abrirModal()
+    this.inserirModal?.abrirModal();
+  }
+
+  editar(estabelecimento: EstabelecimentoModel) {
+    this.inserirModal?.abrirModal(estabelecimento)
   }
 }

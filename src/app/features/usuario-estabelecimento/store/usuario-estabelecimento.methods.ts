@@ -21,6 +21,7 @@ import {
 } from './usuario-estabelecimento.state';
 
 import {
+    EstabelecimentoModel,
     UsuarioEstabelecimentoModel
 } from 'app/domain';
 
@@ -66,7 +67,26 @@ export function withUsuarioEstabelecimentoMethods() {
                             );
                         })
                     )
-                )
+                ),
+                updateUsuarioEstabelecimentoByEstabelecimento(estabelecimento: EstabelecimentoModel) {
+                    patchState(state, {
+                        isLoading: true
+                    });
+
+                    const itens = state.itens().filter(item => item.idEstabelecimento !== estabelecimento.id);
+
+                    const newItens = (estabelecimento.idUsuarioGestorMany ?? []).map(item =>
+                        UsuarioEstabelecimentoModel.create({
+                            idEstabelecimento: estabelecimento.id,
+                            idUsuario: item
+                        })
+                    );
+
+                    patchState(state, {
+                        isLoading: false,
+                        itens: [...itens, ...newItens]
+                    });
+                }
             }
         })
     )
