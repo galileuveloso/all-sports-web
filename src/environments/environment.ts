@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
     allSports: {
-        url: `https://localhost:44395`
+        url: `https://localhost:7288`
     }
 }

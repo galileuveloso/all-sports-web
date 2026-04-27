@@ -1,5 +1,5 @@
-<app-modal-ui [isOpen]="isOpen" title="Novo estabelecimento" subtitle="Preencha os dados para cadastrar o estabelecimento."
-    size="xl" (closed)="fecharModal()">
+<app-modal-ui [isOpen]="isOpen" title="Novo estabelecimento"
+    subtitle="Preencha os dados para cadastrar o estabelecimento." size="xl" (closed)="fecharModal()">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
 
         <!-- Nome -->
@@ -9,8 +9,8 @@
             </label>
             <input class="form-input" [class.form-input--error]="hasError('nome')" formControlName="nome" type="text"
                 placeholder="Ex: Arena Central" autocomplete="off" />
-            <span class="form-error" *ngIf="hasError('nome')">Campo obrigatório</span>
-            <span class="form-error" *ngIf="hasError('nome', 'minlength')">Mínimo 3 caracteres</span>
+            <span class="form-error-page" *ngIf="hasError('nome')">Campo obrigatório</span>
+            <span class="form-error-page" *ngIf="hasError('nome', 'minlength')">Mínimo 3 caracteres</span>
         </div>
 
         <!-- Telefone + Endereço -->
@@ -20,8 +20,8 @@
                     Telefone / WhatsApp <span class="form-required">*</span>
                 </label>
                 <input class="form-input" [class.form-input--error]="hasError('telefone')" formControlName="telefone"
-                    type="tel" placeholder="(99) 99999-0000" appTelefoneMask/>
-                <span class="form-error" *ngIf="hasError('telefone')">Campo obrigatório</span>
+                    type="tel" placeholder="(99) 99999-0000" appTelefoneMask />
+                <span class="form-error-page" *ngIf="hasError('telefone')">Campo obrigatório</span>
             </div>
 
             <div class="form-group">
@@ -30,7 +30,7 @@
                 </label>
                 <input class="form-input" [class.form-input--error]="hasError('endereco')" formControlName="endereco"
                     type="text" placeholder="Rua XV de Novembro, 1234 — Curitiba, PR" />
-                <span class="form-error" *ngIf="hasError('endereco')">Campo obrigatório</span>
+                <span class="form-error-page" *ngIf="hasError('endereco')">Campo obrigatório</span>
             </div>
         </div>
 
@@ -42,7 +42,7 @@
             <input class="form-input" [class.form-input--error]="hasError('modalidades')" formControlName="modalidades"
                 type="text" placeholder="Ex: Futsal, Society, Padel, Beach Tennis" />
             <span class="form-hint">Separe por vírgula</span>
-            <span class="form-error" *ngIf="hasError('modalidades')">Campo obrigatório</span>
+            <span class="form-error-page" *ngIf="hasError('modalidades')">Campo obrigatório</span>
         </div>
 
         <!-- Ativo -->
@@ -57,6 +57,41 @@
                     <span class="toggle-thumb"></span>
                 </span>
             </label>
+        </div>
+        <br>
+        <div class="form-group">
+            <label class="form-label">
+                Gestores / Responsáveis <span class="form-required">*</span>
+            </label>
+
+            <!-- Linha seleção -->
+            <div class="form-row">
+                <select class="form-input" [(ngModel)]="usuarioSelecionadoId" [ngModelOptions]="{ standalone: true }">
+                    <option [ngValue]="null">Selecione um usuário</option>
+                    <option *ngFor="let user of usuarioMany()" [ngValue]="user.id">
+                        {{ user.nome }}
+                    </option>
+                </select>
+
+                <button type="button" class="btn btn-secondary" (click)="adicionarGestor()">
+                    Adicionar
+                </button>
+            </div>
+
+            <!-- Lista -->
+            <div class="gestores-list" *ngIf="gestoresSelecionados.length > 0">
+                <div class="gestor-item" *ngFor="let gestor of gestoresSelecionados">
+                    <span>{{ gestor.nome }}</span>
+
+                    <button type="button" class="btn-remove" (click)="removerGestor(gestor.id)">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <span class="form-error-page" *ngIf="hasError('gestores')">
+                Adicione ao menos um responsável
+            </span>
         </div>
 
         <!-- Footer -->
